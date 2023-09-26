@@ -7,8 +7,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from scipy.stats import chisquare
+
 #first lest explore the data set abit to see what it contains
-cases_2020=pd.read_csv('us-counties-2020.csv')
+cases_2020=pd.read_csv('corona virus deaths/covid-19-data/to be commited/us-counties-2020.csv')
 print(cases_2020.head())
 print(cases_2020.tail())
 print(cases_2020.shape)
@@ -19,12 +20,14 @@ it is very difficult to see trends with that much information. so lets start by 
 the data accually inclued the amount of cases for that day, and not the new cases that day, which means that if we sum the total number of cases
 we get more than 1.7 billion. which of course is not the amount of cases in the US becuase of the overlap. but it does paint a picuture of the cases
 state in each country"""
+
 cases_2020['date']=pd.to_datetime(cases_2020['date'])
 cases_pivot=pd.pivot_table(cases_2020,values='cases',index='date',aggfunc=np.sum)
 plt.plot(cases_pivot)
 plt.ticklabel_format(axis='y',style='plain')
 plt.title('Corona virus cases in the US in the year 2020',color='red')
 plt.show()
+
 """there is definitely a clear uptrend, the plot is skewed massively to the left.
 most of the cases happened towards the end of the year, and the cases does not seem to slow down.
 my objective is to check if there are countries that deviate from this trend. maybe in some countries the trend is the opposite
@@ -112,7 +115,7 @@ states_pivot=states_pivot[states_pivot['date'] >= datetime.datetime(2020, 0o3, 0
 states_pivot.fillna(0,inplace=True)
 states_pivot.drop('date',inplace=True,axis=1)
 print(states_pivot)
-pop=pd.read_csv('NST-EST2022-ALLDATA.csv')
+pop=pd.read_csv('corona virus deaths/covid-19-data/to be commited/NST-EST2022-ALLDATA.csv')
 pop=pop[['NAME','ESTIMATESBASE2020']]
 pop.rename(columns={'NAME':'state'},inplace=True)
 states_pop=pd.Series(cases_2020['state'].unique(),name='state')
